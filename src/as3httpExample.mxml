@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   minWidth="955"
+			   minHeight="600"
+			   creationComplete="initApp(event)">
+	<fx:Script>
+		<![CDATA[
+			import BaseHTTPServer.BaseHTTPRequestHandler;
+			import BaseHTTPServer.HTTPServer;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			[Bindable]
+			public var localAddress : String = "127.0.0.1";
+			
+			[Bindable]
+			public var localPort : int = 8000;
+			
+			[Bindable]
+			public var console : ArrayCollection = new ArrayCollection ( );
+			
+			protected function initApp(event:FlexEvent):void
+			{
+				var httpd : HTTPServer = new HTTPServer ( [ localAddress, localPort ], BaseHTTPRequestHandler );
+				console.addItem ( { "message" : "Serving HTTP on " + httpd.server_address[0] + " port " + httpd.server_address[1] + "..." } );
+				httpd.serve_forever ( );
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:VGroup>
+		<s:HGroup>
+			<s:Label text="IP" />
+			<s:TextInput text="{localAddress}" />
+			<s:Label text="Port" />
+			<s:TextInput text="{localPort}" />
+		</s:HGroup>
+		<s:VGroup>
+			<s:List dataProvider="{console}" labelField="message">
+				
+			</s:List>
+		</s:VGroup>
+	</s:VGroup>
+</s:WindowedApplication>

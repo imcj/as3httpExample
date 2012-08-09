@@ -14,7 +14,7 @@
 			import mx.events.FlexEvent;
 			
 			[Bindable]
-			public var localAddress : String = "127.0.0.1";
+			public var localAddress : String = "0.0.0.0";
 			
 			[Bindable]
 			public var localPort : int = 8000;
